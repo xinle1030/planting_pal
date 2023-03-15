@@ -6,8 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:planting_pal/components/tables/order_data_table.dart';
 import 'package:planting_pal/config/responsive.dart';
 import 'package:planting_pal/config/size_config.dart';
+import 'package:planting_pal/models/order.dart';
 import 'package:planting_pal/style/colors.dart';
 import 'package:planting_pal/style/style.dart';
+
 
 import '../../../components/components.dart';
 
@@ -18,15 +20,11 @@ class UnfulfilledDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
     SizeConfig().init(context);
+
     return SafeArea(
         child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // if (Responsive.isDesktop(context))
-        //   const Expanded(
-        //     flex: 1,
-        //     child: SideMenu(),
-        //   ),
         Expanded(
           flex: 10,
           child: SizedBox(
