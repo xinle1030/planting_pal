@@ -27,10 +27,13 @@ exports.updateOrder = async (req, res) => {
   const flag = req.params.flag;
 
   for (i = 0; i < orderIds.length; i++) {
+
+    let targetOrderId = parseInt(orderIds[i]);
+
     const randomKey = crypto.randomBytes(32).toString("hex");
 
     if (imageFiles !== null || imageFiles !== undefined) {
-      if (imageFiles.length > 0) {
+      if (imageFiles && imageFiles.length > 0) {
         let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
 
         const parameters = {
@@ -47,13 +50,14 @@ exports.updateOrder = async (req, res) => {
 
     if (flag === "tynote" || flag === "cert" || flag === "photo") {
       if (flag === "tynote") {
+        console.log(targetOrderId);
         await Order.update(
           {
             status: "in progress",
           },
           {
             where: {
-              orderId: orderIds[i],
+              orderId: targetOrderId,
             },
           }
         );
@@ -66,7 +70,7 @@ exports.updateOrder = async (req, res) => {
           },
           {
             where: {
-              orderId: orderIds[i],
+              orderId: targetOrderId,
               certLink: webContentLink,
             },
           }
@@ -80,13 +84,13 @@ exports.updateOrder = async (req, res) => {
           },
           {
             where: {
-              orderId: orderIds[i],
+              orderId: targetOrderId,
             },
           }
         );
       }
     } else {
-      await Order.findOne({ where: { orderId: orderIds[i] } })
+      await Order.findOne({ where: { orderId: targetOrderId } })
         .then(async (order) => {
           sendMail(order.receiverEmail);
 
@@ -96,7 +100,7 @@ exports.updateOrder = async (req, res) => {
             },
             {
               where: {
-                orderId: orderIds[i],
+                orderId: targetOrderId,
               },
             }
           );
