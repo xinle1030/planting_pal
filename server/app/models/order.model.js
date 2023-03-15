@@ -36,6 +36,7 @@ module.exports = (sequelize, Sequelize) => {
     treeCoordinatesRequired: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     treeCoordinates: {
       type: Sequelize.STRING,

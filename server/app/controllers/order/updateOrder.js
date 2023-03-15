@@ -29,11 +29,13 @@ exports.updateOrder = async (req, res) => {
   for (i = 0; i < orderIds.length; i++) {
     const randomKey = crypto.randomBytes(32).toString("hex");
 
+    let parameters = {};
+
     if (imageFiles !== null || imageFiles !== undefined) {
       if (imageFiles.length > 0) {
         let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
 
-        const parameters = {
+        parameters = {
           Bucket: config.BUCKET_NAME,
           Key: randomKey + fileType[0],
           Body: imageFiles[i].buffer,
