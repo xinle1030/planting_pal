@@ -48,3 +48,6 @@ app.*.map.json
 /server/node_modules
 /server/app/config/auth.config.js
 /server/app/config/s3.config.js
+/server/app/config/gdrive.config.js
+/server/app/config/email.config.js
+/node_modules

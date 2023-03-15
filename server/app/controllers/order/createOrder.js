@@ -2,8 +2,11 @@ const db = require("../../models");
 const Order = db.order;
 const User = db.user;
 
+const { generatePDF } = require("../../utils/pdfgenerate.utils");
+
 exports.createOrder = async (req, res) => {
   console.log(req.body);
+  generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
   const {
     orderDate,
     userId,
@@ -30,7 +33,7 @@ exports.createOrder = async (req, res) => {
     !numberOfTrees ||
     !amountReceived ||
     !countryOfOrigin ||
-    !treeCoordinatesRequired
+    treeCoordinatesRequired == null
   ) {
     return res.status(400).json({ message: "Missing required fields" });
   }
@@ -51,7 +54,7 @@ exports.createOrder = async (req, res) => {
     (certLink && typeof certLink !== "string") ||
     (photoLink && typeof photoLink !== "string")
   ) {
-    return res.status(400).json({ message: "Invalid input data type 1" });
+    return res.status(400).json({ message: "Invalid input data type" });
   }
 
   const user = await User.findByPk(userId);
