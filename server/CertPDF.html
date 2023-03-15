@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificate</title>
+    <link rel="stylesheet" href="style.css" />
+    
+  </head>
+
+  <body>
+    <div id="pspdfkit-header">
+      <img class="logo" style="height: 30%; width: 30%;" src="plantingpal3.svg" />
+      <p>XLite</p>
+    </div>
+
+    <div class="border"></div>
+    <div class="page" style="page-break-after: always">
+      <div>
+        <h1>
+          Certificate<br />
+          of Excellence
+        </h1>
+      </div>
+
+      <div class="form">
+        <label for="name" class="label">
+          This certificate is proudly <br />
+          presented to:
+        </label>
+        <input type="text" id="name" class="border-bottom" value="Chaw Kok Fei" />
+      </div>
+
+      <div>
+        <p>for the contributions.</p>
+      </div>
+
+      <div class="signer">
+        <div class="form signer-item">
+          <label for="date" class="label">Date:</label>
+          <input type="text" id="date" class="border-bottom" value="16/03/2023" />
+        </div>
+
+        <img class="form signer-item" src="ribbon.svg" />
+
+        <div class="form signer-item">
+          <label for="signature" class="label">Signature:</label>
+          <input type="text" id="signature" class="border-bottom" value="Signed" />
+        </div>
+      </div>
+    </div>
+
+
+    <div id="pspdfkit-footer">
+      <div class="footer-columns">
+        <span>Certificate</span>
+        <span>Page {{ pageNumber }} of {{ pageCount }}</span>
+      </div>
+    </div>
+  </body>
+</html>

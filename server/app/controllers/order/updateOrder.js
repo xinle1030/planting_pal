@@ -7,6 +7,7 @@ const {
   GetObjectCommand,
 } = require("@aws-sdk/client-s3");
 const crypto = require("crypto");
+const { generatePDF } = require("../../utils/pdfgenerate.utils");
 
 const s3 = new S3({
   credentials: {
@@ -41,6 +42,12 @@ exports.updateOrder = async (req, res) => {
 
     // Update order status and photoLink with parameters.Key
     if (flag === "tynote" || flag === "cert") {
+      if (flag === "tynote") {
+        console.log("Ty note");
+      } else if (flag === "cert") {
+        generatePDF("CertPDF.html", "assets/pdf/output/Cert.pdf");
+      }
+
       await Order.update(
         {
           orderStatus: flag === "tynote" ? "In Progress" : "Almost Fulfilled",
