@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:camera/camera.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +17,7 @@ import 'components/components.dart';
 import 'features/screens.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+ const Home({Key? key}) : super(key: key);
 
   static const String id = '/home';
 
@@ -33,17 +34,17 @@ class Home extends StatelessWidget {
                   color: AppColors.black,
                 ))),
         Tab(
-            child: Text('Processing',
-                style: TextStyle(
-                  color: AppColors.black,
-                ))),
-        Tab(
             child: Text('Planting Required',
                 style: TextStyle(
                   color: AppColors.black,
                 ))),
         Tab(
             child: Text('Generate Certs',
+                style: TextStyle(
+                  color: AppColors.black,
+                ))),
+        Tab(
+            child: Text('Send Emails',
                 style: TextStyle(
                   color: AppColors.black,
                 ))),
