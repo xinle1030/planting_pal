@@ -32,11 +32,13 @@ exports.updateOrder = async (req, res) => {
 
     const randomKey = crypto.randomBytes(32).toString("hex");
 
+    let parameters = {};
+
     if (imageFiles !== null || imageFiles !== undefined) {
       if (imageFiles && imageFiles.length > 0) {
         let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
 
-        const parameters = {
+        parameters = {
           Bucket: config.BUCKET_NAME,
           Key: randomKey + fileType[0],
           Body: imageFiles[i].buffer,
@@ -50,10 +52,12 @@ exports.updateOrder = async (req, res) => {
 
     if (flag === "tynote" || flag === "cert" || flag === "photo") {
       if (flag === "tynote") {
-        console.log(targetOrderId);
+        await generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
+        const { webContentLink } = await generatePublicUrl("TqPDF.pdf");
+
         await Order.update(
           {
-            status: "in progress",
+            orderStatus: "In Progress",
           },
           {
             where: {
@@ -63,14 +67,15 @@ exports.updateOrder = async (req, res) => {
         );
       } else if (flag === "cert") {
         await generatePDF("CertPDF.html", "assets/pdf/output/CertPDF.pdf");
-        const { webContentLink } = await generatePublicUrl();
+        const { webContentLink } = await generatePublicUrl("CertPDF.pdf");
+
         await Order.update(
           {
-            status: "almost fulfilled",
+            orderStatus: "Almost Fulfilled",
           },
           {
             where: {
-              orderId: targetOrderId,
+              orderId: orderIds[i],
               certLink: webContentLink,
             },
           }
