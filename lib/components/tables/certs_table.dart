@@ -23,10 +23,30 @@ class _CertsTableState extends State<CertsTable> {
 
   List<Order> orderData = [];
 
-  void generateCertsAndPdfs() {
+  void sendEmails() async {
     List<dynamic> selectedOrders =
-        selectedItems.map((e) => e['orderId']).toList();
+        selectedItems.map((e) => e.orderId.toString()).toList();
     debugPrint(selectedOrders.toString());
+
+    if (selectedOrders.length > 0) {
+      http.Response response;
+
+      final url = 'http://127.0.0.1:8080/api/orders/done';
+
+      Uri uri =
+          Uri.parse(url).replace(queryParameters: {'orderIds': selectedOrders});
+
+      response = await http.put(uri);
+
+      if (response.statusCode == 200) {
+        // handle success response'
+        print(response.body);
+      } else {
+        // handle error response
+        print("error");
+        print(response.body);
+      }
+    }
   }
 
   Future<void> getOrderData() async {
@@ -67,8 +87,8 @@ class _CertsTableState extends State<CertsTable> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FilledButton(
-            onPressed: generateCertsAndPdfs,
-            child: const Text('Generate Certs and Send Emails'),
+            onPressed: sendEmails,
+            child: const Text('Send Emails'),
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(

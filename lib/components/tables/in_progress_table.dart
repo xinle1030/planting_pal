@@ -3,11 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:planting_pal/config/responsive.dart';
 import 'package:planting_pal/config/size_config.dart';
 import 'package:planting_pal/style/colors.dart';
-import 'package:planting_pal/style/style.dart';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:planting_pal/models/order.dart';
+import 'package:camera/camera.dart';
+
+import '../../features/screens.dart';
 
 class InProgressTable extends StatefulWidget {
   const InProgressTable({Key? key}) : super(key: key);
@@ -22,11 +23,29 @@ class _InProgressTableState extends State<InProgressTable> {
   List<dynamic> selectedItems = [];
 
   List<Order> orderData = [];
+  List<CameraDescription> cameras = [];
 
-  void generatePDFs() {
-    List<dynamic> selectedOrders =
-        selectedItems.map((e) => e['orderId']).toList();
+  void downloadPDFs() async{
+    List<dynamic> selectedOrders = selectedItems.map((e) => e.orderId).toList();
     debugPrint(selectedOrders.toString());
+
+        http.Response response;
+
+    // final url = 'http://127.0.0.1:8080/api/orders/tynote';
+
+    // Uri uri =
+    //     Uri.parse(url).replace(queryParameters: {'orderIds': selectedOrders});
+
+    // response = await http.put(uri);
+
+    // if (response.statusCode == 200) {
+    //   // handle success response'
+    //   print(response.body);
+    // } else {
+    //   // handle error response
+    //   print("error");
+    //   print(response.body);
+    // }
   }
 
   Future<void> getOrderData() async {
@@ -67,8 +86,8 @@ class _InProgressTableState extends State<InProgressTable> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FilledButton(
-            onPressed: generatePDFs,
-            child: const Text('Generate PDFs'),
+            onPressed: downloadPDFs,
+            child: const Text('Download PDFs'),
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -103,26 +122,24 @@ class _InProgressTableState extends State<InProgressTable> {
                     label: Text('Receiver Name'),
                   ),
                   DataColumn(
-                    label: Text('Receiver Email'),
-                  ),
-                  DataColumn(
-                    label: Text('Country'),
-                  ),
-                  DataColumn(
                     label: Text('Tree Coordinates Required?'),
                   ),
                   DataColumn(
                     label: Text('Number of Trees'),
                   ),
                   DataColumn(
-                    label: Text('Price'),
+                    label: Text('Thank You Notes PDF Link'),
                   ),
                   DataColumn(
                     label: Text('Last Updated'),
                   ),
+                  DataColumn(
+                    label: Text('Actions'),
+                  ),
                 ],
                 rows: List.generate(orderData.length, (index) {
                   final item = orderData[index];
+                  debugPrint(item.toString());
                   return DataRow(
                       cells: [
                         DataCell(Text(item.orderDate!)),
@@ -130,13 +147,33 @@ class _InProgressTableState extends State<InProgressTable> {
                         DataCell(Text(item.userId!.toString())),
                         DataCell(Text(item.nameOfBuyer!)),
                         DataCell(Text(item.receiverName!)),
-                        DataCell(Text(item.receiverEmail!)),
                         DataCell(
                             Text(item.treeCoordinatesRequired!.toString())),
-                        DataCell(Text(item.countryOfOrigin!)),
                         DataCell(Text(item.numberOfTrees!.toString())),
-                        DataCell(Text(item.amountReceived!.toString())),
-                        DataCell(Text(item.updatedAt!.toString())),
+                        DataCell(
+                            Text((item.pdfLink == null) ? '-' : item.pdfLink!)),
+                        DataCell(Text(item.updatedAt!)),
+                        DataCell(OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: Colors.blue),
+                          ),
+                          onPressed: () async {
+                            // WidgetsFlutterBinding.ensureInitialized();
+                            // try {
+                            //   await availableCameras().then((value) => {
+                            //         print(value),
+                            //         Navigator.push(
+                            //             context,
+                            //             MaterialPageRoute(
+                            //                 builder: (_) =>
+                            //                     CameraPage(cameras: value)))
+                            //       });
+                            // } on CameraException catch (e) {
+                            //   debugPrint(e.description);
+                            // }
+                          },
+                          child: const Text('Update'),
+                        )),
                       ],
                       selected: item.checked!,
                       onSelectChanged: (bool? value) {

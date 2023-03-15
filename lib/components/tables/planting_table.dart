@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:planting_pal/config/responsive.dart';
-import 'package:planting_pal/config/size_config.dart';
 import 'package:planting_pal/style/colors.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:planting_pal/models/order.dart';
-import 'package:camera/camera.dart';
 
-import '../../features/screens.dart';
+import '../../config/size_config.dart';
 
 class PlantingTable extends StatefulWidget {
   const PlantingTable({Key? key}) : super(key: key);
@@ -23,12 +22,31 @@ class _PlantingTableState extends State<PlantingTable> {
   List<dynamic> selectedItems = [];
 
   List<Order> orderData = [];
-  List<CameraDescription> cameras = [];
 
-  void downloadPDFs() {
+  void generateCerts() async {
     List<dynamic> selectedOrders =
-        selectedItems.map((e) => e['orderId']).toList();
+        selectedItems.map((e) => e.orderId.toString()).toList();
     debugPrint(selectedOrders.toString());
+
+    if (selectedOrders.length > 0) {
+      http.Response response;
+
+      final url = 'http://127.0.0.1:8080/api/orders/cert';
+
+      Uri uri =
+          Uri.parse(url).replace(queryParameters: {'orderIds': selectedOrders});
+
+      response = await http.put(uri);
+
+      if (response.statusCode == 200) {
+        // handle success response'
+        print(response.body);
+      } else {
+        // handle error response
+        print("error");
+        print(response.body);
+      }
+    }
   }
 
   Future<void> getOrderData() async {
@@ -69,8 +87,8 @@ class _PlantingTableState extends State<PlantingTable> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FilledButton(
-            onPressed: downloadPDFs,
-            child: const Text('Download PDFs'),
+            onPressed: generateCerts,
+            child: const Text('Generate Certs'),
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -105,13 +123,13 @@ class _PlantingTableState extends State<PlantingTable> {
                     label: Text('Receiver Name'),
                   ),
                   DataColumn(
-                    label: Text('Tree Coordinates Required?'),
+                    label: Text('Receiver Email'),
                   ),
                   DataColumn(
-                    label: Text('Number of Trees'),
+                    label: Text('Country'),
                   ),
                   DataColumn(
-                    label: Text('Thank You Notes PDF Link'),
+                    label: Text('Price'),
                   ),
                   DataColumn(
                     label: Text('Last Updated'),
@@ -122,7 +140,6 @@ class _PlantingTableState extends State<PlantingTable> {
                 ],
                 rows: List.generate(orderData.length, (index) {
                   final item = orderData[index];
-                  debugPrint(item.toString());
                   return DataRow(
                       cells: [
                         DataCell(Text(item.orderDate!)),
@@ -130,32 +147,18 @@ class _PlantingTableState extends State<PlantingTable> {
                         DataCell(Text(item.userId!.toString())),
                         DataCell(Text(item.nameOfBuyer!)),
                         DataCell(Text(item.receiverName!)),
-                        DataCell(
-                            Text(item.treeCoordinatesRequired!.toString())),
-                        DataCell(Text(item.numberOfTrees!.toString())),
-                        DataCell(Text(item.pdfLink!)),
-                        DataCell(Text(item.updatedAt!)),
+                        DataCell(Text(item.receiverEmail!)),
+                        DataCell(Text(item.countryOfOrigin!)),
+                        DataCell(Text(item.amountReceived!.toString())),
+                        DataCell(Text(item.updatedAt!.toString())),
                         DataCell(OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Colors.blue),
                           ),
-                          onPressed: () async {
-
-                              WidgetsFlutterBinding.ensureInitialized();
-                            try {
-                              await availableCameras().then((value) => {
-                                    print(value),
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                CameraPage(cameras: value)))
-                                  });
-                            } on CameraException catch (e) {
-                              debugPrint(e.description);
-                            }
+                          onPressed: () {
+                            debugPrint(item.toString());
                           },
-                          child: const Text('Update'),
+                          child: const Text('View Details'),
                         )),
                       ],
                       selected: item.checked!,
