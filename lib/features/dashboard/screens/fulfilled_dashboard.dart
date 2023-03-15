@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:planting_pal/components/bar_chart_component.dart';
 import 'package:planting_pal/components/tables/order_data_table.dart';
 import 'package:planting_pal/components/tables/fulfilled_table.dart';
 import 'package:planting_pal/config/responsive.dart';

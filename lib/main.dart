@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planting_pal/features/Login/login_screen.dart';
 import 'package:planting_pal/home.dart';
 import 'package:planting_pal/style/colors.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: AppColors.primaryBg,
       ),
-      home: const Home(),
+      home: const LoginScreen(),
     );
   }
 }
