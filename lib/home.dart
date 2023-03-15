@@ -20,7 +20,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
     SizeConfig().init(context);
 
     const tabs = TabBar(
@@ -57,11 +56,12 @@ class Home extends StatelessWidget {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        key: _drawerKey,
-        drawer: const SizedBox(
-          width: 100,
-        ),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back, color: Colors.black),
+          //   onPressed: () => Navigator.of(context).pop(),
+          // ),
           elevation: 0,
           backgroundColor: AppColors.white,
           actions: const [AppBarActionItem()],
