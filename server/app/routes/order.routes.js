@@ -1,5 +1,10 @@
 const { authJwt } = require("../middleware");
-const { createOrder, updateOrder, viewOrder } = require("../controllers/order");
+const {
+  createOrder,
+  updateOrder,
+  viewOrder,
+  viewOrdersByStatus,
+} = require("../controllers/order");
 const multer = require("multer");
 
 const upload = multer({
@@ -21,11 +26,19 @@ module.exports = function (app) {
     createOrder.createOrder
   );
 
+      app.get(
+        "/api/orders",
+        // [authJwt.verifyToken, authJwt.isAdmin],
+        viewOrdersByStatus.getOrdersByStatus
+      );
+
   app.get(
-    "/api/orders",
+    "/api/orders/all",
     // [authJwt.verifyToken, authJwt.isAdmin],
     viewOrder.getOrders
   );
+
+
 
   app.get(
     "/api/orders/:id",
