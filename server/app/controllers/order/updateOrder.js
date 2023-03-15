@@ -49,7 +49,7 @@ exports.updateOrder = async (req, res) => {
       if (flag === "tynote") {
         await Order.update(
           {
-            orderStatus: "in progress",
+            status: "in progress",
           },
           {
             where: {
@@ -62,7 +62,7 @@ exports.updateOrder = async (req, res) => {
         const { webContentLink } = await generatePublicUrl();
         await Order.update(
           {
-            orderStatus: "almost fulfilled",
+            status: "almost fulfilled",
           },
           {
             where: {
@@ -74,7 +74,7 @@ exports.updateOrder = async (req, res) => {
       } else {
         await Order.update(
           {
-            orderStatus: "partially fulfilled",
+            status: "partially fulfilled",
             photoLink: parameters.Key,
             treeCoordinates: req.body.treeCoordinates,
           },
@@ -92,7 +92,7 @@ exports.updateOrder = async (req, res) => {
 
           await Order.update(
             {
-              orderStatus: "fulfilled",
+              status: "fulfilled",
             },
             {
               where: {
