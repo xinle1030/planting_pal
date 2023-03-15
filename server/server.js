@@ -6,8 +6,7 @@ const seed = require("./app/seed/seed");
 const app = express();
 
 var corsOptions = {
-  // origin: "http://localhost:8081",
-  origin: "*",
+  origin: "http://localhost:8081",
 };
 
 app.use(cors(corsOptions));
