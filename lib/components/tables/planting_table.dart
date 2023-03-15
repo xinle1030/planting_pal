@@ -6,13 +6,14 @@ import 'package:planting_pal/style/colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:planting_pal/models/order.dart';
+import 'package:camera/camera.dart';
 
+import '../../features/screens.dart';
 
 class PlantingTable extends StatefulWidget {
   const PlantingTable({Key? key}) : super(key: key);
 
   static const statusForDisplay = "partially fulfilled";
-
 
   @override
   State<PlantingTable> createState() => _PlantingTableState();
@@ -22,6 +23,7 @@ class _PlantingTableState extends State<PlantingTable> {
   List<dynamic> selectedItems = [];
 
   List<Order> orderData = [];
+  List<CameraDescription> cameras = [];
 
   void downloadPDFs() {
     List<dynamic> selectedOrders =
@@ -29,7 +31,7 @@ class _PlantingTableState extends State<PlantingTable> {
     debugPrint(selectedOrders.toString());
   }
 
-    Future<void> getOrderData() async {
+  Future<void> getOrderData() async {
     http.Response response;
 
     final url = "http://127.0.0.1:8080/api/orders?status=" +
@@ -44,8 +46,8 @@ class _PlantingTableState extends State<PlantingTable> {
 
     if (response.statusCode == 200) {
       List<dynamic> orderList = jsonDecode(response.body)['orders'];
-      List<Order> orders =
-          List<Order>.from(orderList.map((order) => Order.fromCheckedJson(order)));
+      List<Order> orders = List<Order>.from(
+          orderList.map((order) => Order.fromCheckedJson(order)));
       print(orders);
       setState(() {
         orderData = orders;
@@ -137,8 +139,21 @@ class _PlantingTableState extends State<PlantingTable> {
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Colors.blue),
                           ),
-                          onPressed: () {
-                            debugPrint(item.orderId!.toString());
+                          onPressed: () async {
+
+                              WidgetsFlutterBinding.ensureInitialized();
+                            try {
+                              await availableCameras().then((value) => {
+                                    print(value),
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                CameraPage(cameras: value)))
+                                  });
+                            } on CameraException catch (e) {
+                              debugPrint(e.description);
+                            }
                           },
                           child: const Text('Update'),
                         )),
@@ -148,8 +163,7 @@ class _PlantingTableState extends State<PlantingTable> {
                         setState(() {
                           item.checked = value!;
 
-                          if (item.checked! &&
-                              !selectedItems.contains(item)) {
+                          if (item.checked! && !selectedItems.contains(item)) {
                             selectedItems.add(item);
                           } else {
                             selectedItems.remove(item);
