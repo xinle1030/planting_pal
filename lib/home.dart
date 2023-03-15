@@ -18,6 +18,8 @@ import 'features/screens.dart';
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
+  static const String id = '/home';
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -55,13 +57,13 @@ class Home extends StatelessWidget {
 
     return DefaultTabController(
       length: 5,
-      child: Scaffold(
+      child: new Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back, color: Colors.black),
-          //   onPressed: () => Navigator.of(context).pop(),
-          // ),
+          // automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           elevation: 0,
           backgroundColor: AppColors.white,
           actions: const [AppBarActionItem()],

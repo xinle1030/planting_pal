@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:planting_pal/features/Login/login_screen.dart';
 import 'package:planting_pal/home.dart';
+import 'package:planting_pal/providers/loading_provider.dart';
 import 'package:planting_pal/style/colors.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => LoadingProvider(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +24,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: AppColors.primaryBg,
       ),
-      home: const LoginScreen(),
+      routes: {
+        LoginScreen.id: (context) => LoginScreen(),
+        Home.id: (context) => Home(),
+      },
     );
   }
 }

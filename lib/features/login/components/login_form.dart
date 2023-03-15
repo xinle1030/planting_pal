@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
-
+import 'package:planting_pal/config/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:planting_pal/features/login/login_screen.dart';
 import 'package:planting_pal/models/user.dart';
+import 'package:planting_pal/providers/loading_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import '../../../home.dart';
 import 'package:http/http.dart' as http;
@@ -28,13 +32,16 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  Future<void> login(email, password) async {
-    final url = "http://127.0.0.1:8080/api/auth/signin";
+  @override
+  Widget build(BuildContext context) {
+    final loadingProvider =
+        Provider.of<LoadingProvider>(context, listen: false);
 
-    print(email);
-    print(password);
+    Future<User?> _futureUser;
 
-    try {
+    Future<User?> login(email, password) async {
+      final url = "http://127.0.0.1:8080/api/auth/signin";
+
       http.Response response;
       response = await http.post(
         Uri.parse(url),
@@ -46,25 +53,14 @@ class _LoginFormState extends State<LoginForm> {
           'password': password,
         }),
       );
-      print(response);
-      print(response.body);
-      final data = User.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
-        print(data);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const Home()),
-        // );
+        loadingProvider.setLoading(false);
+        return User.fromJson(jsonDecode(response.body));
       } else {
-        print(response.statusCode);
+        loadingProvider.setLoading(false);
       }
-    } catch (e) {
-      print(e);
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Form(
       child: Column(
         children: [
@@ -102,7 +98,9 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () {
-                login(emailController.text, psdController.text);
+                loadingProvider.setLoading(true);
+                _futureUser = login(emailController.text, psdController.text);
+                Navigator.pushNamed(context, Home.id);
               },
               child: Text(
                 "Login".toUpperCase(),
