@@ -43,7 +43,7 @@ exports.updateOrder = async (req, res) => {
     if (flag === "tynote" || flag === "cert") {
       await Order.update(
         {
-          orderStatus: flag === "tynote" ? "In Progress" : "Almost Fulfilled",
+          status: flag === "tynote" ? "in progress" : "almost fulfilled",
           photoLink: parameters.Key,
         },
         {

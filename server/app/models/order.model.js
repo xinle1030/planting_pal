@@ -52,10 +52,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    orderStatus: {
+    status: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: "Unfulfilled",
+      defaultValue: "unfulfilled",
     },
     pdfLink: {
       type: Sequelize.STRING,

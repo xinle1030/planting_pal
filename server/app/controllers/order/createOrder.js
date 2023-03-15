@@ -59,7 +59,7 @@ exports.createOrder = async (req, res) => {
     return res.status(400).send({ message: "User not found." });
   }
 
-  const orderStatus = "In Progress";
+  const status = "in progress";
 
   Order.create({
     orderDate,
@@ -73,7 +73,7 @@ exports.createOrder = async (req, res) => {
     numberOfTrees,
     amountReceived,
     countryOfOrigin,
-    orderStatus,
+    status,
     pdfLink,
     certLink,
     photoLink,

@@ -32,7 +32,7 @@ exports.createOrder = async (req, res) => {
     numberOfTrees,
     amountReceived,
     countryOfOrigin,
-    orderStatus,
+    status,
     pdfLink,
     certLink,
     photoLink,
@@ -62,7 +62,7 @@ exports.createOrder = async (req, res) => {
     typeof numberOfTrees !== "number" ||
     typeof amountReceived !== "number" ||
     typeof countryOfOrigin !== "string" ||
-    typeof orderStatus !== "string" ||
+    typeof status !== "string" ||
     (pdfLink && typeof pdfLink !== "string") ||
     (certLink && typeof certLink !== "string") ||
     (photoLink && typeof photoLink !== "string")
@@ -87,7 +87,7 @@ exports.createOrder = async (req, res) => {
     numberOfTrees,
     amountReceived,
     countryOfOrigin,
-    orderStatus,
+    status,
     pdfLink,
     certLink,
     photoLink,

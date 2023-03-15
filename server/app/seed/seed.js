@@ -53,7 +53,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Unfulfilled",
+    status: "unfulfilled",
   });
 
   Order.create({
@@ -68,8 +68,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.2,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
-    orderStatus: "In Progress",
+   status: "in progress",
     pdfLink:
       "https://th.bing.com/th/id/OIP.CBFZpMOFqyCjyHOJxouwVAHaE8?pid=ImgDet&rs=1",
   });
@@ -86,7 +85,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
+    status: "partially fulfilled",
     pdfLink:
       "https://th.bing.com/th/id/OIP.CBFZpMOFqyCjyHOJxouwVAHaE8?pid=ImgDet&rs=1",
     photoLink:
@@ -105,7 +104,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Almost fulfilled",
+    status: "almost fulfilled",
     pdfLink:
       "https://th.bing.com/th/id/OIP.CBFZpMOFqyCjyHOJxouwVAHaE8?pid=ImgDet&rs=1",
     photoLink:
@@ -124,7 +123,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Fulfilled",
+    status: "fulfilled",
     pdfLink:
       "https://th.bing.com/th/id/OIP.CBFZpMOFqyCjyHOJxouwVAHaE8?pid=ImgDet&rs=1",
     certLink:
