@@ -1,22 +1,6 @@
-const db = require("../models");
+const db = require("../../models");
 const Order = db.order;
 const User = db.user;
-
-exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
-};
-
-exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
-};
-
-exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
-};
-
-exports.managerBoard = (req, res) => {
-  res.status(200).send("Manager Content.");
-};
 
 exports.createOrder = async (req, res) => {
   console.log(req.body);
@@ -32,7 +16,6 @@ exports.createOrder = async (req, res) => {
     numberOfTrees,
     amountReceived,
     countryOfOrigin,
-    orderStatus,
     pdfLink,
     certLink,
     photoLink,
@@ -45,7 +28,9 @@ exports.createOrder = async (req, res) => {
     !receiverName ||
     !receiverEmail ||
     !numberOfTrees ||
-    !amountReceived
+    !amountReceived ||
+    !countryOfOrigin ||
+    !treeCoordinatesRequired
   ) {
     return res.status(400).json({ message: "Missing required fields" });
   }
@@ -62,7 +47,6 @@ exports.createOrder = async (req, res) => {
     typeof numberOfTrees !== "number" ||
     typeof amountReceived !== "number" ||
     typeof countryOfOrigin !== "string" ||
-    typeof orderStatus !== "string" ||
     (pdfLink && typeof pdfLink !== "string") ||
     (certLink && typeof certLink !== "string") ||
     (photoLink && typeof photoLink !== "string")
@@ -74,6 +58,8 @@ exports.createOrder = async (req, res) => {
   if (!user) {
     return res.status(400).send({ message: "User not found." });
   }
+
+  const orderStatus = "In Progress";
 
   Order.create({
     orderDate,
@@ -98,39 +84,5 @@ exports.createOrder = async (req, res) => {
     .catch((error) => {
       console.error(error);
       res.status(500).json({ message: "Error creating new order" });
-    });
-};
-
-exports.getOrders = (req, res) => {
-  Order.findAll()
-    .then((orders) => {
-      res.status(200).json({ message: "Orders Retrieved.", orders: orders });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({ message: "Error retrieving orders data" });
-    });
-};
-
-exports.getOrder = (req, res) => {
-  const orderId = parseInt(req.params.id);
-  if (isNaN(orderId)) {
-    res
-      .status(400)
-      .json({ message: "Invalid input: orderId must be an integer" });
-    return;
-  }
-
-  Order.findOne({ where: { orderId: orderId } })
-    .then((order) => {
-      if (!order) {
-        res.status(404).json({ message: "Order not found" });
-      } else {
-        res.status(200).json({ message: "Order Retrieved.", order: order });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({ message: "Error retrieving order data" });
     });
 };

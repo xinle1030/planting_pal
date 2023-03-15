@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
+// const s3Config = require("../config/s3.config");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
