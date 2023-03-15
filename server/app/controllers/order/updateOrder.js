@@ -29,11 +29,13 @@ exports.updateOrder = async (req, res) => {
   for (i = 0; i < orderIds.length; i++) {
     const randomKey = crypto.randomBytes(32).toString("hex");
 
+    let parameters = {};
+
     if (imageFiles !== null || imageFiles !== undefined) {
       if (imageFiles.length > 0) {
         let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
 
-        const parameters = {
+        parameters = {
           Bucket: config.BUCKET_NAME,
           Key: randomKey + fileType[0],
           Body: imageFiles[i].buffer,
@@ -47,9 +49,13 @@ exports.updateOrder = async (req, res) => {
 
     if (flag === "tynote" || flag === "cert" || flag === "photo") {
       if (flag === "tynote") {
+        await generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
+        const { webContentLink } = await generatePublicUrl("TqPDF.pdf");
+
         await Order.update(
           {
             orderStatus: "In Progress",
+            pdfLink: webContentLink,
           },
           {
             where: {
@@ -59,15 +65,16 @@ exports.updateOrder = async (req, res) => {
         );
       } else if (flag === "cert") {
         await generatePDF("CertPDF.html", "assets/pdf/output/CertPDF.pdf");
-        const { webContentLink } = await generatePublicUrl();
+        const { webContentLink } = await generatePublicUrl("CertPDF.pdf");
+
         await Order.update(
           {
             orderStatus: "Almost Fulfilled",
+            certLink: webContentLink,
           },
           {
             where: {
               orderId: orderIds[i],
-              certLink: webContentLink,
             },
           }
         );
