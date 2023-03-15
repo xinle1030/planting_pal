@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+    <link rel="stylesheet" href="style.css" />
+    
+  </head>
+
+  <body>
+    <div id="pspdfkit-header">
+      <img class="logo" style="width: 30%; height: 30%;" src="plantingpal3.svg" />
+      <h2><p>XLite</p></h2>
+    </div>
+
+    <div class="border"></div>
+    <div class="page" style="page-break-after: always">
+      <div>
+        <h1>
+          Thank You!
+        </h1>
+      </div>
+
+      <div class="form">
+        <label for="name" class="label">
+          Our deepest gratitude <br />
+          presented to:
+        </label>
+        <input type="text" id="name" class="border-bottom"  value="" />
+      </div>
+
+      <div class="form">
+        <label for="notes" class="label"> For planting a total amount of tree: </label>
+        <input type="text" id="notes" class="border-bottom" value="" />
+      </div>
+
+      <div>
+        <h4>
+          Your support means the world!
+        </h4>
+      </div>
+    </div>
+
+    <div id="pspdfkit-footer">
+      <div class="footer-columns">
+        <span>Thank You</span>
+        <span>Page {{ pageNumber }} of {{ pageCount }}</span>
+      </div>
+    </div>
+  </body>
+</html>

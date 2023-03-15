@@ -1,0 +1,129 @@
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Space Mono';
+	src: url('SpaceMono-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+body {
+	font-size: 0.875rem;
+	font-family: 'Inter', sans-serif;
+	font-weight: 400;
+	color: #000000;
+	text-align: center;
+	margin: 0 auto;
+	position: relative;
+}
+
+#pspdfkit-header {
+	font-size: 0.625rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: 700;
+	color: #717885;
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+}
+
+.logo {
+	margin-top: 2.5rem;
+	height: 1.5rem;
+	width: auto;
+}
+
+h1 {
+	font-family: 'Space Mono', monospace;
+	font-size: 2.25rem;
+	font-weight: 400;
+	margin-top: 0;
+}
+
+h4 {
+	font-family: 'Space Mono', monospace;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.page {
+	margin-left: 5rem;
+	margin-right: 5rem;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	margin-top: 6rem;
+}
+
+.border-bottom {
+	border: 1px solid #000000;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+}
+
+.signer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2rem 0 2rem 0;
+}
+
+.signer-item {
+	flex-grow: 1;
+}
+
+input {
+	color: #4537de;
+	font-family: 'Space Mono', monospace;
+	font-size: 1rem;
+	text-align: center;
+	margin-top: 4rem;
+	height: 4rem;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+input#name {
+	font-size: 1.5rem;
+}
+
+#pspdfkit-footer {
+	font-size: 0.5rem;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 500;
+	color: #717885;
+	margin-top: 2.5rem;
+	bottom: 2.5rem;
+	position: absolute;
+	width: 100%;
+}
+
+.footer-columns {
+	display: flex;
+	justify-content: space-between;
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+}

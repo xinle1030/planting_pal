@@ -7,6 +7,9 @@ const {
   GetObjectCommand,
 } = require("@aws-sdk/client-s3");
 const crypto = require("crypto");
+const { generatePDF } = require("../../utils/pdfgenerate.utils");
+const { sendMail } = require("../../utils/emailAutomation.utils");
+const { generatePublicUrl } = require("../../utils/gdriveUpload.utils");
 
 const s3 = new S3({
   credentials: {
@@ -26,43 +29,82 @@ exports.updateOrder = async (req, res) => {
   for (i = 0; i < orderIds.length; i++) {
     const randomKey = crypto.randomBytes(32).toString("hex");
 
-    let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
-    console.log(fileType);
+    if (imageFiles !== null || imageFiles !== undefined) {
+      if (imageFiles.length > 0) {
+        let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
 
-    const parameters = {
-      Bucket: config.BUCKET_NAME,
-      Key: randomKey + fileType[0],
-      Body: imageFiles[i].buffer,
-      ContentType: imageFiles[i].mimetype,
-    };
+        const parameters = {
+          Bucket: config.BUCKET_NAME,
+          Key: randomKey + fileType[0],
+          Body: imageFiles[i].buffer,
+          ContentType: imageFiles[i].mimetype,
+        };
 
-    const command = new PutObjectCommand(parameters);
-    await s3.send(command);
+        const command = new PutObjectCommand(parameters);
+        await s3.send(command);
+      }
+    }
 
-    // Update order status and photoLink with parameters.Key
-    if (flag === "tynote" || flag === "cert") {
-      await Order.update(
-        {
-          orderStatus: flag === "tynote" ? "In Progress" : "Almost Fulfilled",
-          photoLink: parameters.Key,
-        },
-        {
-          where: {
-            orderId: orderIds[i],
+    if (flag === "tynote" || flag === "cert" || flag === "photo") {
+      if (flag === "tynote") {
+        await Order.update(
+          {
+            orderStatus: "In Progress",
           },
-        }
-      );
+          {
+            where: {
+              orderId: orderIds[i],
+            },
+          }
+        );
+      } else if (flag === "cert") {
+        await generatePDF("CertPDF.html", "assets/pdf/output/CertPDF.pdf");
+        const { webContentLink } = await generatePublicUrl();
+        await Order.update(
+          {
+            orderStatus: "Almost Fulfilled",
+          },
+          {
+            where: {
+              orderId: orderIds[i],
+              certLink: webContentLink,
+            },
+          }
+        );
+      } else {
+        await Order.update(
+          {
+            orderStatus: "Partially Fulfilled",
+            photoLink: parameters.Key,
+            treeCoordinates: req.body.treeCoordinates,
+          },
+          {
+            where: {
+              orderId: orderIds[i],
+            },
+          }
+        );
+      }
     } else {
-      await Order.update(
-        {
-          photoLink: parameters.Key,
-        },
-        {
-          where: {
-            orderId: orderIds[i],
-          },
-        }
-      );
+      await Order.findOne({ where: { orderId: orderIds[i] } })
+        .then(async (order) => {
+          sendMail(order.receiverEmail);
+
+          await Order.update(
+            {
+              orderStatus: "Fulfilled",
+            },
+            {
+              where: {
+                orderId: orderIds[i],
+              },
+            }
+          );
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).json({ message: "Error retrieving order data" });
+        });
     }
   }
 
