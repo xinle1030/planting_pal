@@ -55,6 +55,7 @@ module.exports = (sequelize, Sequelize) => {
     orderStatus: {
       type: Sequelize.STRING,
       allowNull: false,
+      defaultValue: "Unfulfilled",
     },
     pdfLink: {
       type: Sequelize.STRING,
