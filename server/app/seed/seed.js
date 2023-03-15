@@ -1,4 +1,5 @@
 const db = require("../models");
+var bcrypt = require("bcryptjs");
 const Role = db.role;
 const User = db.user;
 const Order = db.order;
@@ -22,19 +23,22 @@ exports.initial = () => {
   User.create({
     username: "user1",
     email: "user1@mail.com",
-    password: "user1",
+    password: bcrypt.hashSync("user1", 8),
+    roles: ["admin"],
   });
 
   User.create({
     username: "user2",
     email: "user2@mail.com",
-    password: "user2",
+    password: bcrypt.hashSync("user2", 8),
+    roles: ["manager"],
   });
 
   User.create({
     username: "user3",
     email: "user3@mail.com",
-    password: "user3",
+    password: bcrypt.hashSync("user3", 8),
+    roles: ["user"],
   });
 
   Order.create({
