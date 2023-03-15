@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:planting_pal/config/responsive.dart';
 import 'package:planting_pal/config/size_config.dart';
-import 'package:planting_pal/data.dart';
 import 'package:planting_pal/style/colors.dart';
-import 'package:planting_pal/style/style.dart';
-import 'package:planting_pal/data.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:planting_pal/models/order.dart';
+
 
 class PlantingTable extends StatefulWidget {
   const PlantingTable({Key? key}) : super(key: key);
+
+  static const statusForDisplay = "partially fulfilled";
+
 
   @override
   State<PlantingTable> createState() => _PlantingTableState();
@@ -17,10 +21,44 @@ class PlantingTable extends StatefulWidget {
 class _PlantingTableState extends State<PlantingTable> {
   List<dynamic> selectedItems = [];
 
+  List<Order> orderData = [];
+
   void downloadPDFs() {
     List<dynamic> selectedOrders =
         selectedItems.map((e) => e['orderId']).toList();
     debugPrint(selectedOrders.toString());
+  }
+
+    Future<void> getOrderData() async {
+    http.Response response;
+
+    final url = "http://127.0.0.1:8080/api/orders?status=" +
+        PlantingTable.statusForDisplay;
+
+    response = await http.get(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> orderList = jsonDecode(response.body)['orders'];
+      List<Order> orders =
+          List<Order>.from(orderList.map((order) => Order.fromCheckedJson(order)));
+      print(orders);
+      setState(() {
+        orderData = orders;
+      });
+    } else {
+      print("error");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getOrderData();
   }
 
   @override
@@ -85,32 +123,32 @@ class _PlantingTableState extends State<PlantingTable> {
                   debugPrint(item.toString());
                   return DataRow(
                       cells: [
-                        DataCell(Text(item['orderDate'])),
-                        DataCell(Text(item['orderId'])),
-                        DataCell(Text(item['userId'])),
-                        DataCell(Text(item['nameOfBuyer'])),
-                        DataCell(Text(item['receiverName'])),
+                        DataCell(Text(item.orderDate!)),
+                        DataCell(Text(item.orderId!.toString())),
+                        DataCell(Text(item.userId!.toString())),
+                        DataCell(Text(item.nameOfBuyer!)),
+                        DataCell(Text(item.receiverName!)),
                         DataCell(
-                            Text(item['treeCoordinatesRequired'].toString())),
-                        DataCell(Text(item['numberOfTrees'].toString())),
-                        DataCell(Text(item['pdfLink'].toString())),
-                        DataCell(Text(item['updatedAt'].toString())),
+                            Text(item.treeCoordinatesRequired!.toString())),
+                        DataCell(Text(item.numberOfTrees!.toString())),
+                        DataCell(Text(item.pdfLink!)),
+                        DataCell(Text(item.updatedAt!)),
                         DataCell(OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Colors.blue),
                           ),
                           onPressed: () {
-                            debugPrint(item['orderId']);
+                            debugPrint(item.orderId!.toString());
                           },
                           child: const Text('Update'),
                         )),
                       ],
-                      selected: item['checked'],
+                      selected: item.checked!,
                       onSelectChanged: (bool? value) {
                         setState(() {
-                          item['checked'] = value!;
+                          item.checked = value!;
 
-                          if (item['checked'] &&
+                          if (item.checked! &&
                               !selectedItems.contains(item)) {
                             selectedItems.add(item);
                           } else {
