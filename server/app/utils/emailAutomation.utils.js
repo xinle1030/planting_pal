@@ -1,11 +1,12 @@
 const nodemailer = require("nodemailer");
 // let driveLink = $("google_drive").text();
+const config = require("../config/email.config.js");
 
 const transporter = nodemailer.createTransport({
   service: "hotmail",
   auth: {
-    user: "sarryt19@outlook.com",
-    pass: "Sarry1999",
+    user: config.USER,
+    pass: config.PASS,
   },
 });
 
