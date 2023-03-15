@@ -89,8 +89,8 @@ exports.initial = () => {
     orderStatus: "Partially Fulfilled",
     pdfLink:
       "https://th.bing.com/th/id/OIP.CBFZpMOFqyCjyHOJxouwVAHaE8?pid=ImgDet&rs=1",
-    certLink:
-      "https://pulpbits.net/wp-content/uploads/2014/01/Gray-Tabby-Cat1.jpg",
+    photoLink:
+      "12fd20616246da3ee5d42347bea24c5340ba77afd772213ec60ddead95030bb2.jpg",
   });
 
   Order.create({
@@ -108,8 +108,6 @@ exports.initial = () => {
     orderStatus: "Almost fulfilled",
     pdfLink:
       "https://th.bing.com/th/id/OIP.CBFZpMOFqyCjyHOJxouwVAHaE8?pid=ImgDet&rs=1",
-    certLink:
-      "https://pulpbits.net/wp-content/uploads/2014/01/Gray-Tabby-Cat1.jpg",
     photoLink:
       "12fd20616246da3ee5d42347bea24c5340ba77afd772213ec60ddead95030bb2.jpg",
   });
