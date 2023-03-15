@@ -9,6 +9,7 @@ const {
 const crypto = require("crypto");
 const { generatePDF } = require("../../utils/pdfgenerate.utils");
 const { sendMail } = require("../../utils/emailAutomation.utils");
+const { generatePublicUrl } = require("../../utils/gdriveUpload.utils");
 
 const s3 = new S3({
   credentials: {
@@ -57,15 +58,16 @@ exports.updateOrder = async (req, res) => {
           }
         );
       } else if (flag === "cert") {
-        // generatePDF("CertPDF.html", "assets/pdf/output/Cert.pdf");
+        await generatePDF("CertPDF.html", "assets/pdf/output/CertPDF.pdf");
+        const { webContentLink } = await generatePublicUrl();
         await Order.update(
           {
             orderStatus: "Almost Fulfilled",
-            treeCoordinates: req.body.treeCoordinates,
           },
           {
             where: {
               orderId: orderIds[i],
+              certLink: webContentLink,
             },
           }
         );
@@ -74,6 +76,7 @@ exports.updateOrder = async (req, res) => {
           {
             orderStatus: "Partially Fulfilled",
             photoLink: parameters.Key,
+            treeCoordinates: req.body.treeCoordinates,
           },
           {
             where: {

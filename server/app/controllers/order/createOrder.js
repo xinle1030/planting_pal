@@ -6,7 +6,7 @@ const { generatePDF } = require("../../utils/pdfgenerate.utils");
 
 exports.createOrder = async (req, res) => {
   console.log(req.body);
-  // generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
+  generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
   const {
     orderDate,
     userId,
