@@ -47,9 +47,13 @@ exports.updateOrder = async (req, res) => {
 
     if (flag === "tynote" || flag === "cert" || flag === "photo") {
       if (flag === "tynote") {
+        await generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
+        const { webContentLink } = await generatePublicUrl("TqPDF.pdf");
+
         await Order.update(
           {
             orderStatus: "In Progress",
+            pdfLink: webContentLink,
           },
           {
             where: {
@@ -59,15 +63,16 @@ exports.updateOrder = async (req, res) => {
         );
       } else if (flag === "cert") {
         await generatePDF("CertPDF.html", "assets/pdf/output/CertPDF.pdf");
-        const { webContentLink } = await generatePublicUrl();
+        const { webContentLink } = await generatePublicUrl("CertPDF.pdf");
+
         await Order.update(
           {
             orderStatus: "Almost Fulfilled",
+            certLink: webContentLink,
           },
           {
             where: {
               orderId: orderIds[i],
-              certLink: webContentLink,
             },
           }
         );

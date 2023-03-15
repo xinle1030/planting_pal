@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-const path = require("path");
+const { path } = require("path");
 const fs = require("fs");
 const config = require("../config/gdrive.config");
 
@@ -21,17 +21,14 @@ const drive = google.drive({
   auth: oauth2Client,
 });
 
-async function uploadFile() {
-  //   const filePath = path.join(__dirname, "CertPDF.pdf");
-
-  //   console.log(filePath);
-
-  const filePath = "assets/pdf/output/CertPDF.pdf";
+async function uploadFile(fileName) {
+  console.log(fileName);
+  const filePath = `assets/pdf/output/${fileName}`;
 
   try {
     const response = await drive.files.create({
       requestBody: {
-        name: "cert.pdf",
+        name: fileName,
         mimeType: "application/pdf",
       },
 
@@ -47,9 +44,9 @@ async function uploadFile() {
   }
 }
 
-async function generatePublicUrl() {
+async function generatePublicUrl(fileName) {
   try {
-    const fileId = await uploadFile();
+    const fileId = await uploadFile(fileName);
     await drive.permissions.create({
       fileId: fileId,
       requestBody: {

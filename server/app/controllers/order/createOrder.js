@@ -2,11 +2,7 @@ const db = require("../../models");
 const Order = db.order;
 const User = db.user;
 
-const { generatePDF } = require("../../utils/pdfgenerate.utils");
-
 exports.createOrder = async (req, res) => {
-  console.log(req.body);
-  generatePDF("TqPDF.html", "assets/pdf/output/TqPDF.pdf");
   const {
     orderDate,
     userId,
