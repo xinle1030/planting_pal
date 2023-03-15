@@ -43,22 +43,43 @@ exports.updateOrder = async (req, res) => {
     // Update order status and photoLink with parameters.Key
     if (flag === "tynote" || flag === "cert") {
       if (flag === "tynote") {
-        console.log("Ty note");
+        await Order.update(
+          {
+            orderStatus: "In Progress",
+          },
+          {
+            where: {
+              orderId: orderIds[i],
+            },
+          }
+        );
       } else if (flag === "cert") {
         generatePDF("CertPDF.html", "assets/pdf/output/Cert.pdf");
-      }
-
-      await Order.update(
-        {
-          orderStatus: flag === "tynote" ? "In Progress" : "Almost Fulfilled",
-          photoLink: parameters.Key,
-        },
-        {
-          where: {
-            orderId: orderIds[i],
+        await Order.update(
+          {
+            orderStatus: "Almost Fulfilled",
+            treeCoordinates: req.body.treeCoordinates,
           },
-        }
-      );
+          {
+            where: {
+              orderId: orderIds[i],
+            },
+          }
+        );
+      } else {
+        await Order.update(
+          {
+            // orderStatus: flag === "tynote" ? "In Progress" : "Almost Fulfilled",
+            orderStatus: "Partially Fulfilled",
+            photoLink: parameters.Key,
+          },
+          {
+            where: {
+              orderId: orderIds[i],
+            },
+          }
+        );
+      }
     } else {
       await Order.update(
         {
