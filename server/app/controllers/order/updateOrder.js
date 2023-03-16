@@ -27,9 +27,7 @@ exports.updateOrder = async (req, res) => {
   const flag = req.params.flag;
 
   for (i = 0; i < orderIds.length; i++) {
-
     let targetOrderId = parseInt(orderIds[i]);
-
     const randomKey = crypto.randomBytes(32).toString("hex");
 
     let parameters = {};
@@ -56,6 +54,7 @@ exports.updateOrder = async (req, res) => {
         await Order.update(
           {
             status: "in progress",
+            pdfLink: webContentLink,
           },
           {
             where: {
@@ -64,20 +63,22 @@ exports.updateOrder = async (req, res) => {
           }
         );
       } else if (flag === "cert") {
+        console.log("test");
         await generatePDF("CertPDF.html", "assets/pdf/output/CertPDF.pdf");
         const { webContentLink } = await generatePublicUrl("CertPDF.pdf");
 
         await Order.update(
           {
             status: "almost fulfilled",
+            certLink: webContentLink,
           },
           {
             where: {
-              orderId: orderIds[i],
-              certLink: webContentLink,
+              orderId: targetOrderId,
             },
           }
         );
+        console.log("test");
       } else {
         await Order.update(
           {

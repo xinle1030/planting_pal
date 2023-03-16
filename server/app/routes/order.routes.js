@@ -26,19 +26,17 @@ module.exports = function (app) {
     createOrder.createOrder
   );
 
-      app.get(
-        "/api/orders",
-        // [authJwt.verifyToken, authJwt.isAdmin],
-        viewOrdersByStatus.getOrdersByStatus
-      );
+  app.get(
+    "/api/orders",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    viewOrdersByStatus.getOrdersByStatus
+  );
 
   app.get(
     "/api/orders/all",
     // [authJwt.verifyToken, authJwt.isAdmin],
     viewOrder.getOrders
   );
-
-
 
   app.get(
     "/api/orders/:id",
