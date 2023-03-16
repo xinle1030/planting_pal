@@ -58,7 +58,7 @@ exports.createOrder = async (req, res) => {
     return res.status(400).send({ message: "User not found." });
   }
 
-  const status = "in progress";
+  const orderStatus = "Unfulfilled";
 
   Order.create({
     orderDate,

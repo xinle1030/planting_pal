@@ -34,20 +34,18 @@ exports.updateOrder = async (req, res) => {
 
     let parameters = {};
 
-    if (imageFiles !== null || imageFiles !== undefined) {
-      if (imageFiles && imageFiles.length > 0) {
-        let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
+    if (flag === "photo") {
+      let fileType = /\.(\w+)$/.exec(imageFiles[i].originalname);
 
-        parameters = {
-          Bucket: config.BUCKET_NAME,
-          Key: randomKey + fileType[0],
-          Body: imageFiles[i].buffer,
-          ContentType: imageFiles[i].mimetype,
-        };
+      parameters = {
+        Bucket: config.BUCKET_NAME,
+        Key: randomKey + fileType[0],
+        Body: imageFiles[i].buffer,
+        ContentType: imageFiles[i].mimetype,
+      };
 
-        const command = new PutObjectCommand(parameters);
-        await s3.send(command);
-      }
+      const command = new PutObjectCommand(parameters);
+      await s3.send(command);
     }
 
     if (flag === "tynote" || flag === "cert" || flag === "photo") {
