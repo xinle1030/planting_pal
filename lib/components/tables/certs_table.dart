@@ -22,8 +22,13 @@ class _CertsTableState extends State<CertsTable> {
   List<dynamic> selectedItems = [];
 
   List<Order> orderData = [];
+  bool isLoading = false;
 
   void sendEmails() async {
+        setState(() {
+      isLoading = true;
+    });
+
     List<dynamic> selectedOrders =
         selectedItems.map((e) => e.orderId.toString()).toList();
     debugPrint(selectedOrders.toString());
@@ -41,12 +46,21 @@ class _CertsTableState extends State<CertsTable> {
       if (response.statusCode == 200) {
         // handle success response'
         print(response.body);
+                getOrderData();
+        setState(() {
+          isLoading = false;
+        });
       } else {
         // handle error response
         print("error");
         print(response.body);
       }
     }
+
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Future<void> getOrderData() async {
@@ -83,7 +97,11 @@ class _CertsTableState extends State<CertsTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FilledButton(

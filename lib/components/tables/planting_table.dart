@@ -22,8 +22,13 @@ class _PlantingTableState extends State<PlantingTable> {
   List<dynamic> selectedItems = [];
 
   List<Order> orderData = [];
+  bool isLoading = false;
 
   void generateCerts() async {
+    setState(() {
+      isLoading = true;
+    });
+
     List<dynamic> selectedOrders =
         selectedItems.map((e) => e.orderId.toString()).toList();
     debugPrint(selectedOrders.toString());
@@ -41,12 +46,20 @@ class _PlantingTableState extends State<PlantingTable> {
       if (response.statusCode == 200) {
         // handle success response'
         print(response.body);
+        getOrderData();
+        setState(() {
+          isLoading = false;
+        });
       } else {
         // handle error response
         print("error");
         print(response.body);
       }
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Future<void> getOrderData() async {
@@ -83,7 +96,11 @@ class _PlantingTableState extends State<PlantingTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FilledButton(
