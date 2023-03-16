@@ -166,7 +166,7 @@ exports.initial = () => {
   });
 
   Order.create({
-    orderDate: "2021-01-01",
+    orderDate: "2023-01-02",
     userId: 2,
     nameOfBuyer: "Chaw",
     receiverName: "Kok",
