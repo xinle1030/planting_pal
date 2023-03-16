@@ -57,7 +57,7 @@ exports.updateOrder = async (req, res) => {
 
         await Order.update(
           {
-            orderStatus: "In Progress",
+            status: "in progress",
           },
           {
             where: {
@@ -71,7 +71,7 @@ exports.updateOrder = async (req, res) => {
 
         await Order.update(
           {
-            orderStatus: "Almost Fulfilled",
+            status: "almost fulfilled",
           },
           {
             where: {
