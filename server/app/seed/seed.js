@@ -110,7 +110,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.2,
     countryOfOrigin: "Malaysia",
-    orderStatus: "In Progress",
+    status: "in progress",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
   });
@@ -127,7 +127,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.2,
     countryOfOrigin: "Malaysia",
-    orderStatus: "In Progress",
+    status: "in progress",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
   });
@@ -144,7 +144,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.2,
     countryOfOrigin: "Malaysia",
-    orderStatus: "In Progress",
+    status: "in progress",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
   });
@@ -161,7 +161,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.2,
     countryOfOrigin: "Malaysia",
-    orderStatus: "In Progress",
+    status: "in progress",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
   });
@@ -178,7 +178,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 1.2,
     countryOfOrigin: "Malaysia",
-    orderStatus: "In Progress",
+    status: "in progress",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
   });
@@ -195,25 +195,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
-    pdfLink:
-      "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
-    photoLink: "https://tinyurl.com/2dweypw6",
-  });
-
-  Order.create({
-    orderDate: "2021-01-01",
-    userId: 3,
-    nameOfBuyer: "Kok",
-    receiverName: "Fei",
-    receiverEmail: "apedell88@gmail.com",
-    greetings: "Happy Birthday!",
-    treeCoordinatesRequired: true,
-    treeCoordinates: "12.231, 14.254",
-    numberOfTrees: 1,
-    amountReceived: 11.0,
-    countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
+    status: "partially fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -231,7 +213,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
+    status: "partially fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -249,7 +231,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
+    status: "partially fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -267,7 +249,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Partially Fulfilled",
+    status: "partially fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -285,12 +267,10 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Almost Fulfilled",
+    status: "partially fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
-    certLink:
-      "https://drive.google.com/uc?id=1sbTWuCnDNKkxE_t0SDuYfxoUH9Cjtkz-&export=download",
   });
 
   Order.create({
@@ -305,7 +285,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Almost Fulfilled",
+    status: "almost fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -325,7 +305,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Almost Fulfilled",
+    status: "almost fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -345,7 +325,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Almost Fulfilled",
+    status: "almost fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -365,7 +345,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Almost Fulfilled",
+    status: "almost fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -385,7 +365,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Fulfilled",
+    status: "almost fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -405,7 +385,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Fulfilled",
+    status: "fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -425,7 +405,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Fulfilled",
+    status: "fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -445,7 +425,7 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Fulfilled",
+    status: "fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
@@ -465,7 +445,27 @@ exports.initial = () => {
     numberOfTrees: 1,
     amountReceived: 11.0,
     countryOfOrigin: "Malaysia",
-    orderStatus: "Fulfilled",
+    status: "fulfilled",
+    pdfLink:
+      "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
+    photoLink: "https://tinyurl.com/2dweypw6",
+    certLink:
+      "https://drive.google.com/uc?id=1sbTWuCnDNKkxE_t0SDuYfxoUH9Cjtkz-&export=download",
+  });
+
+  Order.create({
+    orderDate: "2021-01-01",
+    userId: 3,
+    nameOfBuyer: "Kok",
+    receiverName: "Fei",
+    receiverEmail: "apedell88@gmail.com",
+    greetings: "Happy Birthday!",
+    treeCoordinatesRequired: true,
+    treeCoordinates: "12.231, 14.254",
+    numberOfTrees: 1,
+    amountReceived: 11.0,
+    countryOfOrigin: "Malaysia",
+    status: "fulfilled",
     pdfLink:
       "https://drive.google.com/uc?id=1ehS1s1fUN42waTF5xKOetJOreWQf7rb2&export=download",
     photoLink: "https://tinyurl.com/2dweypw6",
